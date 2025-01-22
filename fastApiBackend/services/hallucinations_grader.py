@@ -1,8 +1,7 @@
-### Hallucination Grader
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
-from generate_from_docs import docs, generation
+from llm_instance import llm
 from pydantic import BaseModel, Field
+
 
 # Data model
 class GradeHallucinations(BaseModel):
@@ -14,7 +13,6 @@ class GradeHallucinations(BaseModel):
 
 
 # LLM with function call
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 structured_llm_grader = llm.with_structured_output(GradeHallucinations)
 
 # Prompt
@@ -28,4 +26,3 @@ hallucination_prompt = ChatPromptTemplate.from_messages(
 )
 
 hallucination_grader = hallucination_prompt | structured_llm_grader
-print(hallucination_grader.invoke({"documents": docs, "generation": generation}))
