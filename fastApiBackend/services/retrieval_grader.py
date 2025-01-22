@@ -3,7 +3,7 @@ This module implements a retrieval grading pipeline that evaluates the relevance
 """
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
-from llm_instance import llm
+from services.llm_instance import llm
 
 
 # Data model

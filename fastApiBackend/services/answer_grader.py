@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from llm_instance import llm
+from services.llm_instance import llm
 from langchain_core.prompts import ChatPromptTemplate
 
 
