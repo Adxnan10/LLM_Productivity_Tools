@@ -5,13 +5,20 @@ from database.models import User
 from database.db_connection import get_db
 from utilites.auth.hashing import hash_password, verify_password
 from utilites.auth.jwt_handling import create_access_token
+from pydantic import BaseModel
+
 
 router = APIRouter()
 
 
+class RegisterModel(BaseModel):
+    username: str
+    password: str
+
 @router.post("/register")
-def register_user(username: str, password: str, db: Session = Depends(get_db)):
+def register_user(data: RegisterModel, db: Session = Depends(get_db)):
     # Check if username already exists
+    username, password = data.username, data.password
     existing_user = db.query(User).filter(User.username == username).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Username already registered")

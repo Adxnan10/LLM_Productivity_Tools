@@ -10,7 +10,7 @@ export default function Page() {
     e.preventDefault();
     const token = localStorage.getItem("token");
     if (!token) {
-      router.push(`/login`);
+      router.push(`/auth/login`);
     } else {
       router.push(`/chat`);
     }

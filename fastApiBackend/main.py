@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 from database.db_connection import Base, engine, get_db
 import database.models
 from utilites.auth.dependencies import get_current_user
@@ -11,6 +12,13 @@ from API.chat import router as chat_router
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(auth_router, tags=["Authentication"])
 app.include_router(chat_router, tags=["Chat"])
 

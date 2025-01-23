@@ -11,7 +11,7 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { useModelContext } from "../../hooks/ModelContext";
 
 // const fetcher = url => axios.post(url).then(res => res.data);
-
+// TODO implement logic for fetching data from the server
 const chain = new RemoteRunnable({
   url: `http://localhost:8000/graph/`,
 });
