@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from database.models import Chat, Message
+from database.models import Chat
 
 
 # Create a new chat

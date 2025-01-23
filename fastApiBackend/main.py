@@ -2,13 +2,17 @@ from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from database.db_connection import Base, engine, get_db
 import database.models
-from API.auth import router as auth_router
 from utilites.auth.dependencies import get_current_user
+# Routers:
+from API.auth import router as auth_router
+from API.chat import router as chat_router
+
 
 
 app = FastAPI()
 
 app.include_router(auth_router, tags=["Authentication"])
+app.include_router(chat_router, tags=["Chat"])
 
 # Initialize tables
 Base.metadata.create_all(bind=engine)

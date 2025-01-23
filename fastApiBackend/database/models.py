@@ -28,6 +28,7 @@ class Message(Base):
     chat_id = Column(Integer, ForeignKey("chats.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     message = Column(Text, nullable=False)
+    response = Column(Text, default="")
     timestamp = Column(DateTime, default=datetime.utcnow)
 
     chat = relationship("Chat")

@@ -1,9 +1,9 @@
 from langgraph.graph import END, StateGraph, START
-from graph_definition import GraphState
+from graph.graph_definition import GraphState
 # import nodes from graph flow
-from graph_flow import web_search, retrieve, grade_documents, generate, transform_query
+from graph.graph_flow import web_search, retrieve, grade_documents, generate, transform_query
 # import edges from graph flow
-from graph_flow import route_question, decide_to_generate, grade_generation_v_documents_and_question
+from graph.graph_flow import route_question, decide_to_generate, grade_generation_v_documents_and_question
 
 workflow = StateGraph(GraphState)
 
@@ -37,10 +37,11 @@ workflow.add_edge("transform_query", "retrieve")
 workflow.add_conditional_edges(
     "generate",
     grade_generation_v_documents_and_question,
+    # TODO, This is stupid now all paths will end the flow, but I am doing the temporary
     {
-        "not supported": "generate",
+        "not supported": END,
         "useful": END,
-        "not useful": "transform_query",
+        "not useful": END,
     },
 )
 

@@ -38,3 +38,13 @@ def delete_message(db: Session, message_id: int):
         db.delete(message)
         db.commit()
     return message
+
+
+async def update_message_response(db: Session, message_id: int, response_text: str):
+    msg = db.query(Message).filter(Message.id == message_id).first()
+    print(f"updating the message #{msg.id} with response ", response_text)
+    if msg:
+        msg.response = response_text
+        db.commit()
+        db.refresh(msg)
+    return msg
