@@ -10,11 +10,13 @@ import { useTheme } from "../../hooks/ThemeContext";
 import Image from "next/image";
 import { useModelContext } from "../../hooks/ModelContext";
 import ModelStatus from "./ModelStatus";
+import { useRouter } from "next/navigation"
 
 function SideBar() {
   const [showSidebar, setShowSidebar] = useState(true);
   const [showCommands, setShowCommands] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const router = useRouter();
   const toggleSidebar = () => setShowSidebar(!showSidebar);
   const {
     modelStatus,
@@ -87,7 +89,7 @@ function SideBar() {
 
             <ul className="pt-4 mt-4 space-y-2 max-h-96 overflow-auto font-medium border-t border-gray-200 dark:border-gray-700">
               <li className="text-center">
-                <GradientBtn text={"+ New Chat"} />
+                <GradientBtn text={"+ New Chat"} onClick={() => router.push("/chat")} />
               </li>
               <li>
                 <SideBarItem

@@ -1,3 +1,4 @@
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session
 from database.models import Chat
 
@@ -38,3 +39,28 @@ def delete_chat(db: Session, chat_id: int):
         db.delete(chat)
         db.commit()
     return chat
+
+
+def is_chat_owned_by_user(user_id: int, chat_id: int, db: Session) -> bool:
+    """
+    Check if a chat belongs to a user.
+
+    Args:
+        user_id (int): The ID of the user.
+        chat_id (int): The ID of the chat.
+        db (Session): SQLAlchemy database session.
+
+    Returns:
+        bool: True if the chat belongs to the user, False otherwise.
+    """
+    try:
+        print(f"chat with chat id = {chat_id} is accessed by user {user_id} ")
+        chat = db.query(Chat).filter(Chat.id == chat_id, Chat.user_id == user_id).one_or_none()
+        return chat is not None
+    except NoResultFound:
+
+        return False
+    except Exception as e:
+        # Log or handle unexpected exceptions
+        print(f"An error occurred: {e}")
+        return False

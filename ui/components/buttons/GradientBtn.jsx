@@ -7,7 +7,7 @@ const GradientBtn = ({ text, onClick = null }) => {
   };
 
   return (
-    <button style={buttonStyle} className="hover:opacity-75 bg-custom-gradient text-white dark:text-light-dark-background">
+    <button onClick={onClick} style={buttonStyle} className="hover:opacity-75 bg-custom-gradient text-white dark:text-light-dark-background">
       {text}
     </button>
   );

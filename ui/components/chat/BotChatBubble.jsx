@@ -42,7 +42,7 @@ export default function BotChatBubble({ children, bot_name = "" }) {
         </span>
         <span className="text-gray-500 capitalize">{bot_name}</span>
       </div>
-      <div className="p-4 mr-auto bg-[#F1F4FA] dark:bg-gray-800 dark:text-slate-300 rounded-md shadow-md max-w-[90%]">
+      <div className="p-4 mr-auto bg-[#F1F4FA] dark:bg-light-dark-background dark:text-slate-300 rounded-md shadow-md max-w-[90%]">
         <ReactMarkdown
           className="dark:text-white"
           remarkPlugins={[remarkGfm]}

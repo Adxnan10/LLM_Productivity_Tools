@@ -9,16 +9,16 @@ const statusConfig = new Map([
 ]);
 
 const ModelStatus = ({ status }) => {
-  const [dots, setDots] = useState('');
-  console.log('status:', status);
+  // const [dots, setDots] = useState('');
+  // console.log('status:', status);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots(prev => (prev.length < 3 ? prev + '.' : ''));
-    }, 500);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setDots(prev => (prev.length < 3 ? prev + '.' : ''));
+  //   }, 500);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const { colorClass, text } = statusConfig.get(status) || { colorClass: 'dark:bg-slate-400 bg-slate-400 text-white', text: 'idle' };
 
