@@ -11,17 +11,35 @@ import Image from "next/image";
 import { useModelContext } from "../../hooks/ModelContext";
 import ModelStatus from "./ModelStatus";
 import { useRouter } from "next/navigation"
+import fetcher from "../../utils/fetcher";
+import useSWR from "swr";
+import { usePathname } from "next/navigation";
 
 function SideBar() {
   const [showSidebar, setShowSidebar] = useState(true);
-  const [showCommands, setShowCommands] = useState(false);
+  const [chats, setChats] = useState([]);
+  const pathname = usePathname();
+  const current_chat_id = pathname.split("/").pop();
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
   const toggleSidebar = () => setShowSidebar(!showSidebar);
+  const token = localStorage.getItem("token");
   const {
     modelStatus,
-    setModelStatus,
   } = useModelContext();
+  const { data, error, mutate } = useSWR(
+    token ? ['http://localhost:8000/user/chats', token] : null,
+    ([url, token]) => fetcher(url, token, "GET"),
+    { revalidateOnFocus: false, shouldRetryOnError: false }
+  )
+  useEffect(() => {
+    if (data) {
+      console.log("data: ", data);
+      setChats(data);
+    }
+  }, [data]);
+
+
 
   return (
     <div>
@@ -92,18 +110,16 @@ function SideBar() {
                 <GradientBtn text={"+ New Chat"} onClick={() => router.push("/chat")} />
               </li>
               <li>
-                <SideBarItem
-                  text={`Dummy Chat 11`}
-                  active={true}
-                  icon={<BsChatLeftTextFill />}
-                />
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].reverse().map((i) => {
+
+                {chats.slice().reverse().map((chat) => {
                   return (
                     <SideBarItem
-                      key={i}
-                      text={`Dummy Chat ${i}`}
-                      active={false}
+                      key={chat.chat_id}
+                      text={chat.title}
+                      active={chat.chat_id == current_chat_id}
+                      link={`/chat/${chat.chat_id}`}
                       icon={<BsChatLeftTextFill />}
+                      className="my-2"
                     />
                   );
                 })}
